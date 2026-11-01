@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW" data-theme="nordic">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#1e293b" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>極簡記帳儀表板</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <h1 id="greeting">嗨，你好</h1>
+      <button id="btnSettings" class="icon-btn" aria-label="設定">⚙️</button>
+    </header>
+
+    <main class="layout">
+      <!-- 左側：數據卡 -->
+      <section class="col col-stats">
+        <div class="card stat highlight">
+          <span class="label">今日可支配額度</span>
+          <strong id="statDaily" class="value big">--</strong>
+          <span id="statDailyHint" class="hint"></span>
+        </div>
+        <div class="stat-row">
+          <div class="card stat">
+            <span class="label">本月總預算</span>
+            <strong id="statBudget" class="value">--</strong>
+          </div>
+          <div class="card stat">
+            <span class="label">當月累計支出</span>
+            <strong id="statSpent" class="value">--</strong>
+          </div>
+        </div>
+        <div class="card stat">
+          <span class="label">預算使用率</span>
+          <div class="progress"><div id="progressBar" class="progress-bar"></div></div>
+          <span id="statRemain" class="hint"></span>
+        </div>
+        <div class="card">
+          <span class="label">本月分類統計</span>
+          <ul id="tagStats" class="tag-stats"></ul>
+        </div>
+      </section>
+
+      <!-- 右側：輸入與明細 -->
+      <section class="col col-main">
+        <div class="card input-card">
+          <form id="inputForm" autocomplete="off">
+            <input id="mainInput" type="text" placeholder="例如：午餐 120、買遊戲 450 街口" enterkeyhint="done" />
+            <button type="submit" class="btn primary">記一筆</button>
+          </form>
+          <div id="quickTags" class="quick-tags"></div>
+          <p id="toast" class="toast" role="status"></p>
+        </div>
+
+        <div class="card">
+          <div class="list-head">
+            <span class="label">今日明細</span>
+            <span id="todayTotal" class="hint"></span>
+          </div>
+          <ul id="txList" class="tx-list"></ul>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- 設定面板 -->
+  <dialog id="settingsDialog" class="dialog">
+    <form method="dialog" id="settingsForm">
+      <h2>設定</h2>
+      <label>稱謂<input id="setName" type="text" maxlength="20" /></label>
+      <label>貨幣符號<input id="setCurrency" type="text" maxlength="6" list="currencyList" /></label>
+      <datalist id="currencyList">
+        <option value="NT$"></option><option value="靈石"></option><option value="Gold"></option>
+      </datalist>
+      <label>每月總預算<input id="setBudget" type="number" min="0" step="1" /></label>
+      <label>佈景主題
+        <select id="setTheme">
+          <option value="nordic">Nordic 磨砂玻璃</option>
+          <option value="wabi">日系極簡侘寂</option>
+          <option value="dark">深色模式</option>
+          <option value="cyber">Cyberpunk 修仙靈石</option>
+        </select>
+      </label>
+      <div class="dialog-row">
+        <button type="button" id="btnExport" class="btn">匯出 JSON</button>
+        <button type="button" id="btnImport" class="btn">匯入 JSON</button>
+        <input id="importFile" type="file" accept="application/json,.json" hidden />
+      </div>
+      <div class="dialog-row end">
+        <button value="cancel" class="btn">取消</button>
+        <button id="btnSave" value="save" class="btn primary">儲存</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -252,7 +252,11 @@ body {
   .stat-row.three { gap: 8px; }
   .stat-row.three .card { padding: 12px 10px; }
   .stat-row.three .value { font-size: 1rem; }
-  #viewHistory { padding-bottom: 0; }
+  /* 歷史頁沒有底部輸入列，不需保留大底距 */
+  body[data-view="history"] .app { padding-bottom: calc(24px + env(safe-area-inset-bottom)); }
+  .period-nav strong { min-width: 0; font-size: .95rem; }
+  .seg button { padding: 8px 16px; }
+  .search { width: 60%; }
 }
 @media (min-width: 768px) {
   .history { grid-template-columns: minmax(300px, 2fr) 3fr; align-items: start; }

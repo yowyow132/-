@@ -151,6 +151,7 @@ function render() {
   $('#greeting').textContent = `${h < 11 ? '早安' : h < 18 ? '午安' : '晚安'}，${prefs.name}`;
 
   // 視圖切換
+  document.body.dataset.view = state.view;
   $('#viewDashboard').hidden = state.view !== 'dashboard';
   $('#viewHistory').hidden = state.view !== 'history';
   document.querySelectorAll('#tabs .tab').forEach(b => b.classList.toggle('active', b.dataset.view === state.view));

@@ -54,6 +54,7 @@
 [data-theme="cyber"] .value { text-shadow: 0 0 8px var(--accent); }
 
 /* ===== 基礎 ===== */
+[hidden] { display: none !important; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { min-height: 100%; }
 body {
@@ -169,4 +170,92 @@ body {
 }
 @media (min-width: 1280px) {
   .layout { grid-template-columns: 1fr 1.3fr; gap: 24px; }
+}
+
+/* ===== 分頁切換 ===== */
+.topbar { flex-wrap: wrap; gap: 12px; }
+.tabs {
+  display: flex; gap: 4px; margin-left: auto; padding: 4px;
+  background: var(--card); border: 1px solid var(--card-border); border-radius: 99px;
+  backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur);
+}
+.tab {
+  border: none; background: transparent; color: var(--text); padding: 8px 16px;
+  border-radius: 99px; cursor: pointer; font-family: inherit; font-size: .9rem;
+}
+.tab.active { background: var(--accent); color: var(--accent-text); font-weight: 600; }
+
+/* ===== 歷史帳本 ===== */
+.history { display: grid; gap: 16px; }
+.history-head { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+.seg { display: flex; border: 1px solid var(--card-border); border-radius: var(--radius); overflow: hidden; }
+.seg button {
+  border: none; background: transparent; color: var(--text); padding: 8px 18px;
+  cursor: pointer; font-family: inherit; font-size: .95rem;
+}
+.seg button.active { background: var(--accent); color: var(--accent-text); font-weight: 600; }
+.period-nav { display: flex; align-items: center; gap: 12px; }
+.period-nav strong { min-width: 10em; text-align: center; font-size: 1rem; }
+.icon-btn:disabled { opacity: .35; cursor: default; }
+.stat-row.three { grid-template-columns: repeat(3, 1fr); }
+.stat-row.three .value { font-size: 1.15rem; }
+
+.bar-chart {
+  position: relative; display: flex; align-items: flex-end; gap: 3px;
+  height: 180px; padding-bottom: 20px; margin-top: 12px;
+}
+.bar {
+  position: relative; flex: 1; min-width: 0; height: 100%;
+  display: flex; flex-direction: column; justify-content: flex-end; align-items: center; cursor: pointer;
+}
+.bar-fill {
+  width: 100%; max-width: 44px; min-height: 2px; background: var(--accent);
+  border-radius: 4px 4px 0 0; opacity: .8; transition: height .4s, opacity .2s;
+}
+.bar:hover .bar-fill { opacity: 1; }
+.bar-fill.over { background: var(--danger); }
+.bar-label { position: absolute; bottom: -18px; font-size: .7rem; color: var(--muted); white-space: nowrap; }
+.budget-line { position: absolute; left: 0; right: 0; border-top: 2px dashed var(--danger); opacity: .6; pointer-events: none; }
+.budget-line span { position: absolute; right: 0; top: -18px; font-size: .7rem; color: var(--danger); }
+
+.search {
+  width: 55%; max-width: 240px; padding: 6px 10px; font-size: .85rem; font-family: inherit;
+  border-radius: 99px; border: 1px solid var(--card-border); background: rgba(127,127,127,.08); color: var(--text);
+}
+.list-head { align-items: center; gap: 8px; }
+
+/* 時間軸 */
+.timeline { list-style: none; margin-top: 8px; }
+.tl-month {
+  margin: 18px 0 8px; font-weight: 700; color: var(--accent);
+  position: sticky; top: 0; z-index: 1;
+}
+.tl-month:first-child { margin-top: 4px; }
+.tl-day {
+  position: relative; margin-left: 6px; padding: 0 0 12px 20px;
+  border-left: 2px solid var(--card-border);
+}
+.tl-day:last-child { border-left-color: transparent; }
+.tl-day::before {
+  content: ''; position: absolute; left: -7px; top: 3px; width: 12px; height: 12px;
+  border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px var(--card);
+}
+.tl-date { display: flex; justify-content: space-between; font-size: .9rem; font-weight: 600; margin-bottom: 2px; }
+.tl-day .tx-list li { padding: 6px 0; }
+.tl-day.flash { animation: flash 1.4s; }
+@keyframes flash { 0%, 60% { background: rgba(127,127,127,.18); } 100% { background: transparent; } }
+
+@media (max-width: 767px) {
+  .tabs { order: 3; width: 100%; margin-left: 0; }
+  .tab { flex: 1; }
+  .history-head { justify-content: center; }
+  .stat-row.three { gap: 8px; }
+  .stat-row.three .card { padding: 12px 10px; }
+  .stat-row.three .value { font-size: 1rem; }
+  #viewHistory { padding-bottom: 0; }
+}
+@media (min-width: 768px) {
+  .history { grid-template-columns: minmax(300px, 2fr) 3fr; align-items: start; }
+  .history-head { grid-column: 1 / -1; }
+  .history .col-stats { position: sticky; top: 16px; }
 }
